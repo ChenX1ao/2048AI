@@ -4,29 +4,18 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
 	this.startTiles 		= 2;
-	// Xiao: running is just a state
 	this.running      	= false;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   
-	/*
-  this.inputManager.on("think", function() {
-		var best = this.ai.getBest();
-		this.actuator.showHint(best.move);
-  	}.bind(this));
-	*/
   this.inputManager.on("run", function() {
  		if (this.running) {
  			this.running = false;
- 			//this.actuator.setRunButton("Auto-run");
  		} else {
  			this.running = true;
- 			// Xiao: test
-			// this.run();
-			this.test();
- 			//this.actuator.setRunButton("Stop");
+			this.run();
  		}
   }.bind(this));
 
@@ -74,9 +63,7 @@ GameManager.prototype.setup = function () {
     this.addStartTiles();
   }
 	
-	// Xiao: new AI
-	//this.ai            = new AI(this.grid);
-	this.ai = new Test(this.grid);
+
 	
   // Update the actuator
   this.actuate();
@@ -295,34 +282,19 @@ GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
 
-// Xiao: moves continuously until game is over
-/*
 GameManager.prototype.run = function() {
-	var best = this.ai.getBest();
-	console.log(best.move);
-	this.move(best.move);
 	
+	this.ai = new AI(this.grid);
+	var originNode = new Node(this.grid);
 	
+	var bestMove = this.ai.alphabeta(originNode, 5, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, true).bestMove;
+	
+	this.move(bestMove);
 	var timeout = animationDelay;
-	if (this.running && !this.over && !this.won) {
+	if (this.running && !this.over) {
 		var self = this;
 		setTimeout(function(){
 			self.run();
-		}, timeout);
-	}
-}
-*/
-
-GameManager.prototype.test = function() {
-	var best = this.ai.getBest();
-	console.log(best);
-	this.move(best);
-
-	var timeout = animationDelay;
-	if (this.running && !this.over && !this.won) {
-		var self = this;
-		setTimeout(function(){
-			self.test();
 		}, timeout);
 	}
 

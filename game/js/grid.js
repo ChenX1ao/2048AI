@@ -63,6 +63,35 @@ Grid.prototype.eachCell = function (callback) {
   }
 };
 
+// Call callback for every row
+Grid.prototype.eachRow = function(callback) {
+	for (var y = 0; y < this.size; y++) {
+		callback(x, y, this.cells[x][y]);
+	}
+};
+
+// Call callback for every column
+Grid.prototype.eachColumn = function() {
+	for (var x = 0; x < this.size; x++) {
+		callback(x, y, this.cells[x][y]);
+	}
+};
+
+
+// Print the grid for debugging
+Grid.prototype.printCells = function () {	
+	console.log("Current Grid:")
+	this.eachCell(function (x, y, tile) {
+		if (!tile) {
+			console.log(0);
+		}	else {
+			console.log(tile.value);
+		}
+	});
+	console.log();
+};
+
+
 // Check if there are any cells available
 Grid.prototype.cellsAvailable = function () {
   return !!this.availableCells().length;
