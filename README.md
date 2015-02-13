@@ -10,3 +10,5 @@ Use minimax search with alpha-beta pruning. Idea is inspired by Matt Overlan, wi
 Observation
 
 To design the AI using minimax search, we have to balance the heuristic design and the depth we use in the search algorithm. If we have large enough memory and space, we can search as deep as possible, and generate a good move even with a very simple heuristic. On the other hand, if we have pretty good prior knowledge, we can design the heuristics reasonably combined with many normalized factors, and search with a very shallow depth. However, in my opinion, the best AI, or an intelligent AI, should not use much prior knowledge but consider only the basic rules of the game and be able to play, even create some ideas that human beings cannot come up with. Hence there are two directions we can focus on, and we should consider the tradeoff.
+
+There was a mistake in last observation. Without a good memory management mechanism, more heuristics used means fewer depth we can search, in a given period of search time. To run the game fluently, we should try to keep the heuristics important and simple.
