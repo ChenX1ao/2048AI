@@ -73,6 +73,9 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
+	// Xiao: Respond to button presses
+	this.bindButtonPress(".run-button", this.run);
+	
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
@@ -137,8 +140,30 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
   this.emit("keepPlaying");
 };
 
+// Xiao: run
+KeyboardInputManager.prototype.run = function (event) {
+  event.preventDefault();
+  this.emit("run");
+};
+
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
   var button = document.querySelector(selector);
   button.addEventListener("click", fn.bind(this));
   button.addEventListener(this.eventTouchend, fn.bind(this));
 };
+
+/*
+var hintButton = document.getElementById("hint-button");
+hintButton.addEventListener("click", function(e) {
+	event.preventDefault();
+	var feedbackContainer = document.getElementById("feedback-container");
+		feedbackContainer.innerHTML = '<img src=img/spinner.gif />';
+		self.emit("think");
+	});
+
+var runButton = document.getElementById("run-button");
+runButton.addEventListener("click", function(e) {
+	event.preventDefault();
+	self.emit("run");
+	});
+*/
